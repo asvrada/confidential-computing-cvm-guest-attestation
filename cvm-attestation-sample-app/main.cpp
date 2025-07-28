@@ -17,7 +17,7 @@ using json = nlohmann::json;
 #define OUTPUT_TYPE_BOOL "bool"
 
 // default guest attestation url
-std::string default_attestation_url = "https://sharedeus2.eus2.attest.azure.net/";
+std::string default_attestation_url = "https://aihsm.weu.test.attest.azure.net/";
 
 #ifndef PLATFORM_UNIX
 static char* optarg = nullptr;
@@ -119,8 +119,8 @@ int main(int argc, char* argv[]) {
         }
 
         if (output_type.empty()) {
-            // set the default output type to boolean
-            output_type = OUTPUT_TYPE_BOOL;
+            // set the default output type to JWT
+            output_type = OUTPUT_TYPE_JWT;
         }
 
         AttestationClient* attestation_client = nullptr;

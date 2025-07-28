@@ -63,7 +63,7 @@ constexpr char g_distro_name_str[] = "Microsoft";
 #endif
 
 constexpr char azure_guest_protocol[] = "https://";
-constexpr char azure_guest_url[] = "/attest/AzureGuest?api-version=2020-10-01";
+constexpr char azure_guest_url[] = "/attest/AzureGuest?api-version=2025-06-01";
 
 using namespace attest;
 

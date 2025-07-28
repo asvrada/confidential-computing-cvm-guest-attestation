@@ -293,6 +293,16 @@ AttestationResult SendRequest(const std::string& url,
     // Create a header object to add the authentication token and content-type to the header.
     struct curl_slist *headers = NULL;
     headers = curl_slist_append(headers, "Content-Type: application/json");
+    headers = curl_slist_append(headers, "Accept: application/eat+jwt; eat_profile=\"tag:aihsm-preview, 2025\"");
+
+    // Print headers
+    curl_slist *current_header = headers;
+    printf("\n");
+    while (current_header) {
+        printf("Header: %s\n", current_header->data);
+        current_header = current_header->next;
+    }
+    printf("\n");
 
     curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
 

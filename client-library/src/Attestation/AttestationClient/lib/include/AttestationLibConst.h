@@ -69,6 +69,8 @@
 #define JSON_AK_CERT_PEM "AkCertPem"
 #define JSON_AK_CERT_QUERY_ID "CertQueryId"
 
+#define JSON_AZI_HSM_KEYINFO_KEY "AziHSMKeyInfo"
+
 /*********************Attestation Client*************************************/
 
 #define JSON_ARM_ID_KEY "ArmID"
