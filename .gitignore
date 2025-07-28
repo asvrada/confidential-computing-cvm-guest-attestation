@@ -75,3 +75,9 @@ packages/
 **/compile_commands.json
 
 *.swp
+
+# *********************
+# Results of building client library
+# *********************
+client-library/src/Attestation/AttestationClient/lib/DynamicLibrary/**
+cvm-attestation-sample-app/AttestationClient
