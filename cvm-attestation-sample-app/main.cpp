@@ -61,6 +61,31 @@ void usage(char* programName) {
     printf("Usage: %s -a <attestation-endpoint> -n <nonce> -o <%s|%s>\n", programName, OUTPUT_TYPE_BOOL, OUTPUT_TYPE_JWT);
 }
 
+void prettyPrintJWT(const std::string& jwt_str) {
+    std::vector<std::string> tokens;
+    boost::split(tokens, jwt_str, [](char c) {return c == '.'; });
+    
+    if (tokens.size() < 3) {
+        printf("Invalid JWT token - insufficient parts\n");
+        return;
+    }
+
+    try {
+        // Parse and pretty print header
+        json header = json::parse(base64_decode(tokens[0]));
+        printf("JWT Header:\n%s\n\n", header.dump(2).c_str());
+        
+        // Parse and pretty print body/payload
+        json body = json::parse(base64_decode(tokens[1]));
+        printf("JWT Body:\n%s\n\n", body.dump(2).c_str());
+        
+        printf("JWT Signature: %s\n\n", tokens[2].c_str());
+    }
+    catch (const std::exception& e) {
+        printf("Error parsing JWT: %s\n", e.what());
+    }
+}
+
 int main(int argc, char* argv[]) {
     std::string attestation_url;
     std::string nonce;
@@ -152,7 +177,13 @@ int main(int argc, char* argv[]) {
         }
 
         if (boost::iequals(output_type, OUTPUT_TYPE_JWT)) {
-            printf("%s", attestation_success ? jwt_str.c_str() : result.description_.c_str());   
+            if (attestation_success) {
+                printf("\nRaw MAA Token:\n\n%s\n\n", jwt_str.c_str());
+                printf("MAA Token (Pretty Printed):\n\n");
+                prettyPrintJWT(jwt_str);
+            } else {
+                printf("Attestation failed: %s\n", result.description_.c_str());
+            }
         }
         else {
             printf("%s", is_cvm ? "true" : "false");
